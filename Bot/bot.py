@@ -184,20 +184,6 @@ async def changePrefix(ctx):
     prefix_data[str(ctx.guild.id)] = new_prefix
 @bot.event
 async def on_guild_join(guild):
-    try:
-        url = "http://34.131.85.205:3234/add/garfield"
-        guild_name = guild.name
-        payload = json.dumps({
-                "guild_id": guild.id,
-                "guild_name": guild_name
-        })
-        headers = {
-            'Content-Type': 'application/json'
-        }
-        response = requests.request("POST", url, headers=headers, data=payload)
-    except:
-        print("Could not send to server")
-    
     for channel in guild.text_channels:
         if channel.permissions_for(guild.me).send_messages:
             embed = discord.Embed(
