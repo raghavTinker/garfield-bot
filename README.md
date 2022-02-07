@@ -12,7 +12,7 @@
 
   Invite the bot using [Bot Invite Link](https://discord.com/oauth2/authorize?client_id=940113958105395201&permissions=2048&scope=bot) and run `&setup` <br>
 
-  To self-host the bot, read [SETUP.md](https://github.com/Servatom/garfield-bot/blob/main/SETUP.md).
+  To self-host the bot, read [SETUP.md](https://github.com/raghavTinker/garfield-bot/blob/master/SETUP.md).
 <hr>
 
 ### NOTE: The content generated is from [Garfield comics](https://www.gocomics.com/garfield). This bot just scrapes the comics from the website. We also scrape from [Garfield comics](http://pt.jikos.cz/garfield/) to get old comics.
