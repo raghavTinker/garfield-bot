@@ -1,0 +1,20 @@
+[[source]]
+url = "https://pypi.org/simple"
+verify_ssl = true
+name = "pypi"
+
+[packages]
+sqlalchemy = "==1.4.29"
+"discord.py" = "==1.7.3"
+aiohttp = "==3.7.4.post0"
+async-timeout = "==3.0.1"
+attrs = "==21.4.0"
+beautifulsoup4 = "==4.10.0"
+bs4 = "==0.0.1"
+certifi = "==2021.10.8"
+
+[dev-packages]
+autopep8 = "*"
+
+[requires]
+python_version = "3.8"

@@ -1,0 +1,14 @@
+version: '3.4'
+
+services:
+  garfieldbot:
+    image: garfieldbot
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+    volumes:
+      - ./database:/Bot/database
+    environment:
+      - TOKEN=<TOKEN>
+      - PREFIX=&
+    restart: always
