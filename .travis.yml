@@ -22,9 +22,24 @@ jobs:
       - docker-compose run --rm garfieldbot sh -c "python bot.py"
   
   - stage: Push
+    name: Docker build Push
     script:
       - docker build -t raghavtinker/garfieldbot .
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
       # take image and push to docker hub
       - docker push raghavtinker/garfieldbot
+    
+  - stage: Deploy
+    name: Deploy bot to server
+    language: python
+    python: "3.8"
+    cache: "pip"
+    before_install:
+      # get public key from env and store it in nestor.pem
+      - echo "$SSH_KEY" > nestor.pem
+      - chmod 400 nestor.pem
+    install:
+      - pip install ansible
+    script:
+      - ansible-playbook playbooks/deploy.yml
