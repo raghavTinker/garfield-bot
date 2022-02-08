@@ -23,7 +23,7 @@ jobs:
   
   - stage: Push
     script:
-      - docker build -t raghavtinker/garfieldbot
+      - docker build -t raghavtinker/garfieldbot .
       - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
       # take image and push to docker hub
