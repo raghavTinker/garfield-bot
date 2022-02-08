@@ -1,4 +1,5 @@
 # Garfield-Bot
+[![Build Status](https://app.travis-ci.com/raghavTinker/garfield-bot.svg?token=4ktMbz4xbgspi5DpbYD1&branch=master)](https://app.travis-ci.com/raghavTinker/garfield-bot)
 
 <p align="center">
 <img src="https://assets.servatom.com/garfield-bot/banner.jpeg" height="200px">
