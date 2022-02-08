@@ -1,21 +1,30 @@
 sudo: required
 dist: focal
 
-language: python
-python:
-  - "3.8"
-services:
-  - docker
+stages:
+  - name: Tests
+  - name: Push
+  - name: Deploy
 
-before_script: pip install docker-compose
+jobs:
+  include:
 
-script:
-  - docker-compose run --rm garfieldbot sh -c "python bot.py"
+  - stage: Tests
+    name: Docker build Tests
 
-after_success:
-  # Log in to docker CLI
-  - docker build -t raghavtinker/garfieldbot .
-  - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    language: python
+    python: "3.8"
+  
+    services:
+      - docker
+    before_script: pip install docker-compose
+    script:
+      - docker-compose run --rm garfieldbot sh -c "python bot.py"
+  
+  - stage: Push
+    script:
+      - docker build -t raghavtinker/garfieldbot
+      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
 
-  # Take the image and push them to docker hub 
-  - docker push raghavtinker/garfieldbot
+      # take image and push to docker hub
+      - docker push raghavtinker/garfieldbot
