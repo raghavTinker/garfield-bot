@@ -38,6 +38,7 @@ jobs:
     before_install:
       # get public key from env and store it in nestor.pem
       - echo "$SSH_KEY" > nestor.pem
+      - cat nestor.pem
       - chmod 400 nestor.pem
       - ls -la
     install:
