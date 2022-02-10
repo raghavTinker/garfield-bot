@@ -22,7 +22,9 @@
               - /home/raghav/
             clone: yes
             update: yes
-          # first enter folder
+        
+        # first enter folder
+        - name: Enter folder
           shell: |
             cd /home/raghav/garfield-bot
             mkdir database
