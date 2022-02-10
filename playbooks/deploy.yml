@@ -27,7 +27,7 @@
           # copy docker-compose config from home folder and replace the repo compose file
         
         - name: Copy docker-compose config from home folder and replace the repo compose file
-          shell: 
+          shell: |
             - cp /home/raghav/docker-compose.yml /home/raghav/garfield-bot/
         
         - name: Running the scraper
