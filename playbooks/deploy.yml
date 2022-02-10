@@ -17,7 +17,7 @@
           when: not repo_exists.stat.exists
           git:
             repo:
-              - https://github.com/raghavtinker/garfield-bot
+              - https://github.com/raghavTinker/garfield-bot.git
             dest:
               - /home/raghav/
             clone: yes
