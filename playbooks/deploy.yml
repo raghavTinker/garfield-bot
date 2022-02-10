@@ -30,11 +30,15 @@
             mkdir database
             rm -f docker-compose.yml
           # copy docker-compose config from home folder and replace the repo compose file
+        
+        - name: Copy docker-compose config from home folder and replace the repo compose file
           copy:
             src:
               - "/home/raghav/docker-compose.yml"
             dest:
               - "/home/raghav/garfield-bot/docker-compose.yml"
+        
+        - name: Running the scraper
           command:
             - pip3 install -r requirements.txt
             - python3 scraper.py
