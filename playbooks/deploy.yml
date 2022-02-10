@@ -20,24 +20,29 @@
         
         # first enter folder
         - name: Enter folder
+          when: not repo_exists.stat.exists
           shell: |
-            cd /home/raghav/garfield-bot
-            mkdir database
-            rm -f docker-compose.yml
+            mkdir /home/raghav/garfield-bot/database
+            rm -f /home/raghav/garfield-bot/docker-compose.yml
           # copy docker-compose config from home folder and replace the repo compose file
         
         - name: Copy docker-compose config from home folder and replace the repo compose file
+          when: not repo_exists.stat.exists
           shell: |
-            - cp /home/raghav/docker-compose.yml /home/raghav/garfield-bot/
+              cp /home/raghav/docker-compose.yml /home/raghav/garfield-bot/
+        
+        - name: Installing requirements.txt
+          when: not repo_exists.stat.exists
+          shell: |
+              pip3 install -r /home/raghav/garfield-bot/requirements.txt
         
         - name: Running the scraper
+          when: not repo_exists.stat.exists
           shell: |
-            - pip3 install -r requirements.txt
-            - python3 scraper.py
+              cd /home/raghav/garfield-bot && python3 scraper.py&
           
           # run docker container
         
         - name: Run docker container
           shell: |
-            cd /home/raghav/garfield-bot
-            docker-compose up -d
+            cd /home/raghav/garfield-bot && docker-compose up -d
