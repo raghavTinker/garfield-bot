@@ -15,13 +15,8 @@
 
         - name: If repo does not exist clone the repo
           when: not repo_exists.stat.exists
-          git:
-            repo:
-              - https://github.com/raghavTinker/garfield-bot.git
-            dest:
-              - /home/raghav/
-            clone: yes
-            update: yes
+          shell: |
+            git clone https://github.com/raghavTinker/garfield-bot.git
         
         # first enter folder
         - name: Enter folder
