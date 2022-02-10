@@ -39,7 +39,7 @@
               - "/home/raghav/garfield-bot/docker-compose.yml"
         
         - name: Running the scraper
-          command:
+          shell: |
             - pip3 install -r requirements.txt
             - python3 scraper.py
           
