@@ -1,47 +1,37 @@
 sudo: required
 dist: focal
-
 stages:
-  - name: Tests
-  - name: Push
-  - name: Deploy
-
+- name: Tests
+- name: Push
+- name: Deploy
 jobs:
   include:
-
   - stage: Tests
     name: Docker build Tests
-
     language: python
-    python: "3.8"
-  
+    python: '3.8'
     services:
-      - docker
+    - docker
     before_script: pip install docker-compose
     script:
-      - docker-compose run --rm garfieldbot sh -c "python bot.py"
-  
+    - docker-compose run --rm garfieldbot sh -c "python bot.py"
   - stage: Push
     name: Docker build Push
     script:
-      - docker build -t raghavtinker/garfieldbot .
-      - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
-
-      # take image and push to docker hub
-      - docker push raghavtinker/garfieldbot
-    
+    - docker build -t raghavtinker/garfieldbot .
+    - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
+    - docker push raghavtinker/garfieldbot
   - stage: Deploy
     name: Deploy bot to server
     language: python
-    python: "3.8"
-    cache: "pip"
+    python: '3.8'
+    cache: pip
     before_install:
-      # get public key from env and store it in nestor.pem
-      - echo "$SSH_KEY" > nestor.pem
-      - cat nestor.pem
-      - chmod 600 nestor.pem
-      - ls -la
+    - openssl aes-256-cbc -K $encrypted_24ae9caab966_key -iv $encrypted_24ae9caab966_iv
+      -in nestor.enc -out ./nestor -d
+    - chmod 600 nestor
+    - ls -la
     install:
-      - pip install ansible
+    - pip install ansible
     script:
-      - ansible-playbook playbooks/deploy.yml
+    - ansible-playbook playbooks/deploy.yml
