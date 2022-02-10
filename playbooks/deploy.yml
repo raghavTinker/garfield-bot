@@ -1,7 +1,45 @@
 ---
     - hosts: prod
       tasks:
-        - name: Execute Deploy Script
-          shell: mkdir -p /home/raghav/garfieldbot
-          register: deploy_result
-        - debug: msg="{{ deploy_result.stdout }}"
+        - name: Check if repo is cloned
+          stat:
+            path: "/home/raghav/garfield-bot"
+          register: repo_exists
+        
+        - name: If repo exists then re run docker container
+          when: repo_exists.stat.exists
+          # first enter folder
+          shell: |
+            cd /home/raghav/garfield-bot
+            git pull
+
+        - name: If repo does not exist clone the repo
+          when: not repo_exists.stat.exists
+          git:
+            repo:
+              - raghavtinker/garfield-bot
+            dest:
+              - /home/raghav/
+            clone: yes
+            update: yes
+          # first enter folder
+          shell: |
+            cd /home/raghav/garfield-bot
+            mkdir database
+            rm -f docker-compose.yml
+          # copy docker-compose config from home folder and replace the repo compose file
+          copy:
+            src:
+              - "/home/raghav/docker-compose.yml"
+            dest:
+              - "/home/raghav/garfield-bot/docker-compose.yml"
+          command:
+            - pip3 install -r requirements.txt
+            - python3 scraper.py
+          
+          # run docker container
+        
+        - name: Run docker container
+          shell: |
+            cd /home/raghav/garfield-bot
+            docker-compose up -d

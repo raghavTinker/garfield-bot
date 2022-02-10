@@ -65,3 +65,4 @@ def addComics():
             year = year + 1
             print(month)
             print(year)
+addComics()

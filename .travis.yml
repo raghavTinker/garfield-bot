@@ -15,12 +15,14 @@ jobs:
     before_script: pip install docker-compose
     script:
     - docker-compose run --rm garfieldbot sh -c "python bot.py"
+  
   - stage: Push
     name: Docker build Push
     script:
     - docker build -t raghavtinker/garfieldbot .
     - echo "$DOCKER_PASSWORD" | docker login -u "$DOCKER_ID" --password-stdin
     - docker push raghavtinker/garfieldbot
+  
   - stage: Deploy
     name: Deploy bot to server
     language: python
