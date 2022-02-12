@@ -3,51 +3,51 @@
       tasks:
         - name: Check if repo is cloned
           stat:
-            path: "/home/raghav/garfield-bot"
+            path: "/DeployedAPIs/garfield-bot"
           register: repo_exists
         
         - name: If repo exists then re run docker container
           when: repo_exists.stat.exists
           # first enter folder
           shell: |
-            cd /home/raghav/garfield-bot
+            cd /DeployedAPIs/garfield-bot
             git pull
 
         - name: If repo does not exist clone the repo
           when: not repo_exists.stat.exists
           shell: |
+            cd /DeployedAPIs
             git clone https://github.com/raghavTinker/garfield-bot.git
         
         # first enter folder
         - name: Enter folder
           when: not repo_exists.stat.exists
           shell: |
-            mkdir /home/raghav/garfield-bot/database
-            rm -f /home/raghav/garfield-bot/docker-compose.yml
+            mkdir /DeployedAPIs/garfield-bot/database
+            rm -f /DeployedAPIs/garfield-bot/docker-compose.yml
         
         # copy docker-compose.yml
         - name: Copy docker-compose.yml
           copy:
             src: docker-compose.yml
-            dest: /home/raghav/garfield-bot/docker-compose.yml
+            dest: /DeployedAPIs/garfield-bot/docker-compose.yml
         
         # Install requirements.txt
         - name: Install requirements.txt
           when: not repo_exists.stat.exists
           pip:
             name: install
-            requirements: /home/raghav/garfield-bot/requirements.txt
+            requirements: /DeployedAPIs/garfield-bot/requirements.txt
         
         # Run scraper in the background
         - name: Run scraper in the background
           when: not repo_exists.stat.exists
           shell: |
-            cd /home/raghav/garfield-bot
+            cd /DeployedAPIs/garfield-bot
             python3 scraper.py&
         
         # Run docker container
         - name: Run docker container
           shell: |
-            cd /home/raghav/garfield-bot
+            cd /DeployedAPIs/garfield-bot
             docker-compose up --build -d
-            
