@@ -27,15 +27,20 @@ jobs:
     python: '3.8'
     cache: pip
     before_install:
+    # ssh keys
     - openssl aes-256-cbc -K $encrypted_b06a1a195e3f_key -iv $encrypted_b06a1a195e3f_iv
       -in deploymentFiles/ansible.enc -out ./ansible -d
     - chmod 600 ansible
+
+    # docker compose file
     - openssl aes-256-cbc -K $encrypted_5a553d836f7c_key -iv $encrypted_5a553d836f7c_iv
-      -in deploymentFiles/docker-compose.yml.enc -out ./playbooks/docker-compose.yml
-      -d
+      -in deploymentFiles/docker-compose.yml.enc -out ./playbooks/docker-compose.yml -d
+    
+    # ansible_hosts
     - openssl aes-256-cbc -K $encrypted_ad2b00579d77_key -iv $encrypted_ad2b00579d77_iv
       -in deploymentFiles/ansible_hosts.enc -out ./ansible_hosts -d
     install:
     - pip install ansible
     script:
     - ansible-playbook playbooks/deploy.yml
+
